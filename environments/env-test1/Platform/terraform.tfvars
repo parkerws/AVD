@@ -1,0 +1,15 @@
+location                         = "eastus2"
+rg_name                          = "rg-avd-plat-envtest1"
+key_vault_name                   = "kv-avd-plat-envtest1"
+key_vault_sku_name               = "standard"
+tenant_id                        = "e8e83af5-506f-4a39-b9c4-aec76de91a96"
+kv_aad_object_id                 = "70750f6c-2741-4206-9da4-48593b2199f5"
+storage_account_tier             = "standard"
+storage_account_replication_type = "LRS"
+storage_account_kind             = "StorageV2"
+storage_account_name             = "avdtestenvtest1parklab"
+share_name                       = "fslogix"
+aad_group_fslogix_id             = "70750f6c-2741-4206-9da4-48593b2199f5"
+tags = {
+  env = "envtest1"
+}
