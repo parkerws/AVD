@@ -70,3 +70,8 @@ variable "infrastructure_encryption_enabled" {
   description = "A second layer of optional encryption, the default is true."
   default     = true
 }
+
+variable "file_share_quota" {
+  type = number
+  description = "Quota in GB for the file share. Must be greater than 0 and less that 5120 GB (5 TB)"
+}

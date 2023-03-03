@@ -1,3 +1,9 @@
+locals {
+  workspace_pe_name = "pe-${var.workspace_name}"
+  hostpool_pe_name = "pe-${var.host_pool_name}"
+  global_workspace_pe_name = "pe-global-${var.workspace_name}"
+}
+
 module "avd_resource_group" {
   source = "../../../modules/Resource_Group"
 
@@ -49,3 +55,46 @@ module "session_hosts" {
   ]
 }
 
+module "app_security_group" {
+  source = "../../../modules/Application_Security_Group"
+  asg_name = var.asg_name
+  location = var.location
+  nic_list = module.session_hosts.session_host_nic_id
+  rg_name = module.avd_resource_group.name
+}
+
+module "avd_workspace_private_endpoint" {
+  source = "../../../modules/Private_Endpoint"
+  name = local.workspace_pe_name
+  location = var.location
+  resource_group_name = module.avd_resource_group.name
+  subnet_id = var.avd_pe_subnet_id
+  tags = var.tags
+  private_connection_resource_id = module.avd_resources.workspace_id
+  is_manual_connection = false
+  subresource_names = ["feed"]
+}
+
+module "avd_hostpool_private_endpoint" {
+  source = "../../../modules/Private_Endpoint"
+  name = local.hostpool_pe_name
+  location = var.location
+  resource_group_name = module.avd_resource_group.name
+  subnet_id = var.avd_pe_subnet_id
+  tags = var.tags
+  private_connection_resource_id = module.avd_resources.hostpool_id
+  is_manual_connection = false
+  subresource_names = ["connection"]
+}
+
+module "avd_workspace_global_private_endpoint" {
+  source = "../../../modules/Private_Endpoint"
+  name = local.global_workspace_pe_name
+  location = var.location
+  resource_group_name = module.avd_resource_group.name
+  subnet_id = var.avd_pe_subnet_id
+  tags = var.tags
+  private_connection_resource_id = module.avd_resources.workspace_id
+  is_manual_connection = false
+  subresource_names = ["global"]
+}
