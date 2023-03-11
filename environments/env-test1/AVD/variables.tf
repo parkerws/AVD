@@ -83,6 +83,11 @@ variable "avd_subnet_id" {
   description = "Enter the subnet for the AVD deployment:"
 }
 
+variable "avd_pe_subnet_id" {
+  type = string
+  description = "Enter the subnet id for AVD private endpoints"
+}
+
 variable "vm_name" {
   type        = string
   description = "Session Host/VM Name:"
@@ -139,4 +144,9 @@ variable "custom_image_name" {
 variable "custom_image_resource_group_name" {
   type        = string
   description = "Name of resource group target image resides in"
+}
+
+variable "asg_name" {
+  type = string
+  description = "Desired name of application security group"
 }

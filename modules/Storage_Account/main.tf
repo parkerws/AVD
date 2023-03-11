@@ -20,6 +20,7 @@ resource "azurerm_storage_account" "sa" {
 resource "azurerm_storage_share" "fslogix_share" {
   name                 = var.share_name
   storage_account_name = azurerm_storage_account.sa.name
+  quota = var.file_share_quota
   depends_on = [
     azurerm_storage_account.sa
   ]

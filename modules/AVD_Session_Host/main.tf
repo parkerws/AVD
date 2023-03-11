@@ -26,7 +26,7 @@ resource "azurerm_virtual_machine" "avd_host" {
   location                      = var.location
   resource_group_name           = var.avd_rg
   vm_size                       = var.vm_size
-  network_interface_ids         = ["${azurerm_network_interface.avd_host_nic.*.id[count.index]}"]
+  network_interface_ids         = ["${azurerm_network_interface.avd_host_nic.*.id[count.index]}"]  
   delete_os_disk_on_termination = true
 
 

@@ -1,4 +1,6 @@
-
+locals {
+  storage_account_pe_name = "${var.storage_account_name}-pe"
+}
 module "platform_resource_group" {
   source = "../../../modules/Resource_Group"
 
@@ -32,7 +34,19 @@ module "storage_account" {
   account_kind             = var.storage_account_kind
   share_name               = var.share_name
   aad_group_fslogix_id     = var.aad_group_fslogix_id
+  file_share_quota = var.file_share_quota
   tags                     = var.tags
 
 }
 
+module "storage_account_endpoint" {
+  source                         = "../../../modules/Private_Endpoint"
+  name                           = local.storage_account_pe_name
+  location                       = var.location
+  resource_group_name            = module.platform_resource_group.name
+  subnet_id                      = var.storage_pe_subnet_id
+  tags                           = var.tags
+  private_connection_resource_id = module.storage_account.id
+  is_manual_connection           = false
+  subresource_names              = ["file"]
+}
